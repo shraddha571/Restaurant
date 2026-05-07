@@ -1,0 +1,61 @@
+{
+  "entities": {
+    "Order": {
+      "title": "Order",
+      "description": "User orders containing cart items.",
+      "type": "object",
+      "properties": {
+        "items": {
+          "type": "array"
+        },
+        "totalAmount": {
+          "type": "number"
+        },
+        "status": {
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "string"
+        }
+      }
+    },
+    "Booking": {
+      "title": "Booking",
+      "description": "Table bookings at the restaurant.",
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "phone": {
+          "type": "string"
+        },
+        "date": {
+          "type": "string"
+        },
+        "time": {
+          "type": "string"
+        },
+        "people": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "firestore": {
+    "/orders/{orderId}": {
+      "schema": "Order",
+      "description": "Store all customer orders"
+    },
+    "/bookings/{bookingId}": {
+      "schema": "Booking",
+      "description": "Store all table reservations"
+    }
+  }
+}
