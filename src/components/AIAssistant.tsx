@@ -208,15 +208,31 @@ export default function AIAssistant() {
               <path fill="currentColor" d="M50 0 L56 22 Q70 20 80 10 L76 30 Q90 35 100 50 L76 70 Q70 80 80 90 L56 78 Q50 95 50 100 L44 78 Q30 80 20 90 L24 70 Q10 65 0 50 L24 30 Q30 20 20 10 L44 22 Q50 5 50 0 Z" />
           </svg>
 
-          <div className="relative z-10 w-[60px] h-[60px] bg-[#2a0000] rounded-full border border-[#D4AF37]/40 flex items-center justify-center shadow-inner">
+          <div className="relative z-10 w-[60px] h-[60px] bg-[#2a0000] rounded-full border border-[#D4AF37]/40 flex items-center justify-center shadow-inner overflow-hidden">
              <AnimatePresence mode="wait">
                {isOpen ? (
                  <motion.div key="close" initial={{ opacity: 0, rotate: -180 }} animate={{ opacity: 1, rotate: 0 }} exit={{ opacity: 0, rotate: 180 }}>
                     <X className="w-8 h-8 drop-shadow-md text-[#D4AF37]" />
                  </motion.div>
                ) : (
-                 <motion.div key="open" initial={{ opacity: 0, scale: 0.5 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.5 }}>
-                    <FlickeringDiya />
+                 <motion.div 
+                   key="open" 
+                   initial={{ opacity: 0, scale: 0.5 }} 
+                   animate={{ opacity: 1, scale: 1 }} 
+                   exit={{ opacity: 0, scale: 0.5 }}
+                   className="w-full h-full"
+                 >
+                    <img 
+                      src="/chatbot.png" 
+                      alt="Mithai Guide" 
+                      className="w-full h-full object-cover"
+                      onError={(e) => {
+                        const target = e.target as HTMLImageElement;
+                        target.style.display = 'none';
+                        // Fallback to Diya if image is not yet provided
+                        target.parentElement!.innerHTML = '<div class="flex items-center justify-center w-full h-full"><svg viewBox="0 0 100 100" class="w-10 h-10 text-[#D4AF37]"><path fill="currentColor" d="M50 20 Q70 20 70 50 Q70 80 50 80 Q30 80 30 50 Q30 20 50 20" /></svg></div>';
+                      }}
+                    />
                  </motion.div>
                )}
              </AnimatePresence>

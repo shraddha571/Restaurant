@@ -2,18 +2,27 @@ import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { CartItem } from './types';
 
+export interface User {
+  uid: string;
+  name: string;
+  phone: string;
+}
+
 export interface StoreState {
   cartItems: CartItem[];
+  user: User | null;
   addToCart: (item: CartItem) => void;
   removeFromCart: (id: string | number, weight: string, orderType: string) => void;
   updateQuantity: (id: string | number, weight: string, orderType: string, delta: number) => void;
   clearCart: () => void;
+  setUser: (user: User | null) => void;
 }
 
 export const useStore = create<StoreState>()(
   persist(
     (set) => ({
       cartItems: [],
+      user: null,
       addToCart: (item) => set((state) => {
         // Items are unique based on ID, weight, AND orderType
         const existingItemIndex = state.cartItems.findIndex(i => 
@@ -45,6 +54,7 @@ export const useStore = create<StoreState>()(
         })
       })),
       clearCart: () => set({ cartItems: [] }),
+      setUser: (user) => set({ user }),
     }),
     {
       name: 'raghuveer-storage',

@@ -1,13 +1,16 @@
-import { useState } from 'react';
-import { CATEGORIES, PRODUCTS } from '../constants';
+import { useState, useEffect } from 'react';
+import { CATEGORIES, PRODUCTS as STATIC_PRODUCTS } from '../constants';
 import { Filter, Minus, Plus, Search, ShoppingBag, Sparkles, Star, Tag, Check, X, Package, Clock } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { useStore } from '../store';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 import { Product } from '../types';
+import { db } from '../lib/firebase';
+import { collection, onSnapshot } from 'firebase/firestore';
 
 export default function Menu() {
+  const [products, setProducts] = useState<Product[]>(STATIC_PRODUCTS);
   const [selectedCategory, setSelectedCategory] = useState('mithai');
   const [searchQuery, setSearchQuery] = useState('');
   const [activeFilter, setActiveFilter] = useState('all');
@@ -18,6 +21,19 @@ export default function Menu() {
   const navigate = useNavigate();
   const addToCart = useStore(state => state.addToCart);
 
+  // Sync with Firestore menu collection
+  useEffect(() => {
+    const unsubscribe = onSnapshot(collection(db, 'menu'), (snapshot) => {
+      if (!snapshot.empty) {
+        const productsData = snapshot.docs.map(doc => ({
+          ...doc.data()
+        })) as Product[];
+        setProducts(productsData);
+      }
+    });
+    return () => unsubscribe();
+  }, []);
+
   const filters = [
     { id: 'all', label: 'All' },
     { id: 'premium', label: 'Premium' },
@@ -25,7 +41,7 @@ export default function Menu() {
     { id: 'veg', label: 'Eggless' },
   ];
 
-  const filteredProducts = PRODUCTS.filter(product => {
+  const filteredProducts = products.filter(product => {
     const matchesCategory = product.category === selectedCategory;
     const matchesSearch = product.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
                           product.description.toLowerCase().includes(searchQuery.toLowerCase());

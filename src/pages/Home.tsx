@@ -12,14 +12,14 @@ export default function Home() {
       <div className="px-6 md:px-10 lg:px-20 max-w-[1600px] mx-auto space-y-40 md:space-y-64">
         {/* Hero Section — Redesigned */}
         <section className="relative h-[calc(100vh-100px)] flex items-center overflow-hidden">
-          {/* Static Mandala Background */}
+          {/* Static Mandala Background — Positioned at extreme right edge */}
           <div 
-            className="absolute right-[-15%] md:right-[-10%] lg:right-[-5%] top-1/2 -translate-y-1/2 w-[400px] md:w-[800px] h-[400px] md:h-[800px] pointer-events-none z-0"
+            className="absolute -right-20 md:-right-32 lg:-right-40 top-1/2 -translate-y-1/2 w-[400px] md:w-[800px] lg:w-[1000px] h-[400px] md:h-[800px] lg:h-[1000px] pointer-events-none z-0"
           >
             <img 
               src="/mandala.png" 
               alt="Mandala Background" 
-              className="w-full h-full object-contain mix-blend-multiply"
+              className="w-full h-full object-contain mix-blend-multiply opacity-40 md:opacity-60 lg:opacity-80"
             />
           </div>
 
@@ -102,19 +102,6 @@ export default function Home() {
               <p className="text-on-surface-variant text-xl md:text-2xl font-body italic leading-relaxed max-w-3xl mx-auto opacity-70">
                 Each piece is a testament to fifty years of relentless purity — hand-selected Mamra almonds, Saffron from the valley, and Desi Ghee crafted in our own estates.
               </p>
-           </div>
-        </section>
-
-        {/* Bespoke Experience — Custom Callout */}
-        <section className="bg-primary p-20 md:p-32 rounded-[6rem] relative overflow-hidden text-center group">
-           <div className="absolute inset-0 ornament-bg opacity-10"></div>
-           <div className="relative z-10 space-y-12">
-              <span className="small-caps text-secondary uppercase tracking-[0.3em] text-[10px] font-bold">Bespoke Experience</span>
-              <h2 className="text-5xl md:text-8xl font-headline font-light italic text-secondary leading-none tracking-tighter max-w-4xl mx-auto">
-                 "Can't find your childhood memory? We'll recreate it for you."
-              </h2>
-              <div className="w-24 h-px bg-secondary/20 mx-auto"></div>
-              <button onClick={() => navigate('/custom')} className="bg-secondary text-primary px-12 py-6 rounded-2xl small-caps hover:gold-glow hover:scale-110 transition-all font-bold uppercase tracking-widest text-[10px]">Consult Our Master Chef</button>
            </div>
         </section>
 
@@ -234,7 +221,15 @@ export default function Home() {
               </div>
               <div className="lg:col-span-5 relative group">
                  <div className="aspect-[4/5] rounded-[5rem] overflow-hidden luxury-border-gold shadow-2xl">
-                    <img src="https://picsum.photos/seed/store/800/1000" alt="Raghuveer Store" className="w-full h-full object-cover grayscale-[0.2] group-hover:grayscale-0 group-hover:scale-110 transition-all duration-1000" />
+                    <img 
+                      src="/inner-sanctum.jpg" 
+                      alt="Raghuveer Store" 
+                      className="w-full h-full object-cover grayscale-[0.2] group-hover:grayscale-0 group-hover:scale-110 transition-all duration-1000"
+                      onError={(e) => {
+                        const target = e.target as HTMLImageElement;
+                        target.src = 'https://picsum.photos/seed/store/800/1000';
+                      }}
+                    />
                  </div>
                  <div className="absolute -bottom-10 -left-10 w-40 h-40 bg-white rounded-full p-8 shadow-2xl luxury-border-gold flex items-center justify-center animate-floating-motif">
                     <MapPin className="w-12 h-12 text-secondary" />
@@ -245,58 +240,87 @@ export default function Home() {
       </div>
 
         {/* Footer — Legacy & Connections */}
-        <footer className="bg-primary text-secondary p-20 md:p-32 rounded-t-[6rem] relative overflow-hidden mt-40 md:mt-64">
-           <div className="absolute inset-x-0 top-0 h-24 overflow-hidden pointer-events-none opacity-20">
-              <div className="flex gap-4">
-                 {[...Array(20)].map((_, i) => (
-                   <div key={i} className="w-24 h-24 rounded-full border border-secondary/30 -translate-y-12 shrink-0"></div>
+        <footer className="bg-primary text-secondary p-12 md:p-24 lg:p-32 rounded-t-[4rem] md:rounded-t-[6rem] relative overflow-hidden mt-40 md:mt-64 border-t border-secondary/20 shadow-[0_-20px_50px_rgba(87,0,0,0.2)]">
+           <div className="absolute inset-x-0 top-0 h-32 overflow-hidden pointer-events-none opacity-10">
+              <div className="flex gap-8">
+                 {[...Array(15)].map((_, i) => (
+                   <div key={i} className="w-32 h-32 rounded-full border-[2px] border-secondary -translate-y-16 shrink-0 blur-[2px]"></div>
                  ))}
               </div>
            </div>
            
-           <div className="grid grid-cols-1 md:grid-cols-12 gap-20 relative z-10">
-              <div className="md:col-span-4 space-y-10">
-                 <div className="flex items-center gap-4">
-                    <div className="w-16 h-16 bg-white/10 rounded-2xl flex items-center justify-center border border-white/20">
-                       <span className="font-headline font-black text-3xl italic">R</span>
+           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-16 md:gap-24 relative z-10">
+              <div className="lg:col-span-4 space-y-10">
+                 <div className="flex items-center gap-6">
+                    <div className="w-20 h-20 bg-secondary/10 rounded-3xl flex items-center justify-center border border-secondary/30 shadow-[inset_0_0_20px_rgba(212,175,55,0.2)] group cursor-pointer hover:bg-secondary/20 transition-all duration-500">
+                       <span className="font-headline font-black text-4xl italic text-secondary drop-shadow-lg">R</span>
                     </div>
-                    <h2 className="text-4xl font-headline italic tracking-tighter">Raghuveer</h2>
+                    <div className="space-y-1">
+                       <h2 className="text-4xl md:text-5xl font-headline italic tracking-tighter text-secondary">Raghuveer</h2>
+                       <p className="text-[10px] tracking-[0.4em] font-bold uppercase opacity-50">Heritage Amravati</p>
+                    </div>
                  </div>
-                 <p className="small-caps opacity-60 text-[10px] tracking-widest leading-loose font-bold uppercase">
-                    Est. 1970 • Amravati <br/>
-                    Pure Desi Ghee Heritage <br/>
-                    Central India's Finest Curation
+                 <p className="font-body italic text-lg text-secondary/70 leading-relaxed max-w-sm">
+                    "Since 1970, we have been the custodians of taste, crafting every sweet with pure desi ghee and relentless devotion."
                  </p>
+                 <div className="flex gap-4 pt-4">
+                    {['Instagram', 'Facebook', 'Twitter'].map(social => (
+                      <button key={social} className="w-10 h-10 rounded-full border border-secondary/20 flex items-center justify-center hover:bg-secondary hover:text-primary transition-all duration-300 text-[10px] font-bold uppercase tracking-tighter">
+                        {social[0]}
+                      </button>
+                    ))}
+                 </div>
               </div>
               
-              <div className="md:col-span-4 space-y-10">
-                 <span className="small-caps text-[10px] opacity-40 uppercase tracking-[0.3em] font-bold">Meethi Virasat</span>
+              <div className="lg:col-span-4 space-y-10">
+                 <div className="flex items-center gap-3">
+                    <div className="w-8 h-px bg-secondary/30"></div>
+                    <span className="small-caps text-[10px] text-secondary uppercase tracking-[0.4em] font-bold">Meethi Virasat</span>
+                 </div>
                  <nav className="flex flex-col gap-6">
-                    <NavLink to="/menu" className="font-headline italic text-2xl hover:text-white transition-colors">Our Philosophy</NavLink>
-                    <NavLink to="/menu" className="font-headline italic text-2xl hover:text-white transition-colors">Master Chefs</NavLink>
-                    <NavLink to="/menu" className="font-headline italic text-2xl hover:text-white transition-colors">Purity Protocols</NavLink>
+                    {['Our Philosophy', 'Master Chefs', 'Purity Protocols', 'Legacy Gallery'].map(item => (
+                      <NavLink key={item} to="/menu" className="font-headline italic text-2xl hover:text-white transition-all duration-300 hover:translate-x-2 inline-block">
+                        {item}
+                      </NavLink>
+                    ))}
                  </nav>
               </div>
 
-              <div className="md:col-span-4 space-y-10">
-                 <span className="small-caps text-[10px] opacity-40 uppercase tracking-[0.3em] font-bold">Reach Us</span>
-                 <div className="space-y-6 italic">
-                    <p className="text-2xl font-headline">+91 98765 43210</p>
-                    <p className="text-2xl font-headline">namaste@raghuveer.com</p>
-                    <p className="opacity-60 font-bold uppercase tracking-widest text-[10px]">Amravati, Maharashtra</p>
+              <div className="lg:col-span-4 space-y-10">
+                 <div className="flex items-center gap-3">
+                    <div className="w-8 h-px bg-secondary/30"></div>
+                    <span className="small-caps text-[10px] text-secondary uppercase tracking-[0.4em] font-bold">Reach Us</span>
+                 </div>
+                 <div className="space-y-8">
+                    <div className="space-y-2 group cursor-pointer">
+                       <p className="text-[10px] uppercase tracking-widest text-secondary/40 font-bold group-hover:text-secondary transition-colors">Direct Inquiries</p>
+                       <p className="text-2xl md:text-3xl font-headline italic text-secondary">+91 98765 43210</p>
+                    </div>
+                    <div className="space-y-2 group cursor-pointer">
+                       <p className="text-[10px] uppercase tracking-widest text-secondary/40 font-bold group-hover:text-secondary transition-colors">Electronic Mail</p>
+                       <p className="text-2xl md:text-3xl font-headline italic text-secondary">namaste@raghuveer.com</p>
+                    </div>
+                    <div className="pt-4 flex items-start gap-3">
+                       <MapPin className="w-5 h-5 text-secondary shrink-0 mt-1" />
+                       <p className="font-body italic text-secondary/60 text-lg leading-snug">Main Market, Gandhi Chowk, <br/>Amravati, Maharashtra 444601</p>
+                    </div>
                  </div>
               </div>
            </div>
 
            {/* Bottom Copyright Line */}
-           <div className="mt-32 pt-10 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-8 relative z-10">
-              <p className="small-caps text-[9px] opacity-40 tracking-widest">© 2026 RAGHUVEER HERITAGE</p>
-              <div className="flex items-center gap-6">
-                 <div className="h-px w-12 bg-secondary/30"></div>
-                 <p className="font-headline italic text-xl opacity-80">The Gold Standard of Sweets</p>
-                 <div className="h-px w-12 bg-secondary/30"></div>
+           <div className="mt-32 pt-12 border-t border-secondary/10 flex flex-col lg:flex-row justify-between items-center gap-10 relative z-10">
+              <p className="small-caps text-[10px] text-secondary/40 tracking-[0.3em] font-bold">© 2026 RAGHUVEER HERITAGE</p>
+              <div className="flex items-center gap-8">
+                 <div className="h-px w-16 bg-secondary/20"></div>
+                 <div className="flex items-center gap-3">
+                    <Sparkles className="w-4 h-4 text-secondary/40" />
+                    <p className="font-headline italic text-2xl text-secondary/80 tracking-tight">The Gold Standard of Sweets</p>
+                    <Sparkles className="w-4 h-4 text-secondary/40" />
+                 </div>
+                 <div className="h-px w-16 bg-secondary/20"></div>
               </div>
-              <p className="small-caps text-[9px] opacity-40 tracking-widest">ALL RIGHTS RESERVED</p>
+              <p className="small-caps text-[10px] text-secondary/40 tracking-[0.3em] font-bold uppercase">All Rights Reserved</p>
            </div>
         </footer>
     </div>

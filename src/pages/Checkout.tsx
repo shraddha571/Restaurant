@@ -10,11 +10,16 @@ import { Order } from '../types';
 
 export default function Checkout() {
   const navigate = useNavigate();
-  const { cartItems, clearCart } = useStore();
+  const { cartItems, clearCart, user } = useStore();
   const [isProcessing, setIsProcessing] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState<'online' | 'offline'>('online');
   const [orderType, setOrderType] = useState<'dine-in' | 'takeaway'>('takeaway');
-  const [customerInfo, setCustomerInfo] = useState({ name: '', phone: '' });
+
+  // Automatically fetch from logged-in user
+  const customerInfo = {
+    name: user?.name || '',
+    phone: user?.phone || ''
+  };
 
   const total = cartItems.reduce((acc, item) => acc + item.price * item.qty, 0);
 
@@ -29,8 +34,8 @@ export default function Checkout() {
       return;
     }
 
-    if (!customerInfo.name || !customerInfo.phone) {
-      toast.error('Please provide name and phone number');
+    if (!user) {
+      toast.error('Please login to continue');
       return;
     }
 
@@ -47,10 +52,11 @@ export default function Checkout() {
       }
 
       // Order Data Structure as requested
-      const orderData: Omit<Order, 'id'> = {
+      const orderData = {
+        userId: user.uid,
         token: token,
-        customerName: customerInfo.name,
-        phone: customerInfo.phone,
+        customerName: user.name,
+        phoneNumber: user.phone,
         items: cartItems.map(item => ({
           id: item.id,
           name: item.name,
@@ -60,11 +66,14 @@ export default function Checkout() {
           img: item.img,
           orderType: item.orderType
         })),
+        orderedItems: cartItems.map(item => item.name).join(', '),
+        quantity: cartItems.reduce((acc, item) => acc + item.qty, 0),
         totalAmount: total,
         paymentMethod: paymentMethod,
         paymentStatus: paymentMethod === 'online' ? 'paid' : 'unpaid',
         orderType: orderType,
         status: 'placed',
+        orderStatus: 'placed',
         createdAt: serverTimestamp()
       };
 
@@ -115,27 +124,16 @@ export default function Checkout() {
                 <User className="w-6 h-6 text-secondary" />
                 Customer Identity
               </h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <label className="text-[10px] font-black uppercase tracking-widest text-primary/40 ml-2">Your Name</label>
-                  <input 
-                    type="text" 
-                    placeholder="e.g. Rahul Sharma"
-                    className="w-full bg-surface-container border border-primary/5 rounded-xl px-6 py-4 focus:outline-none focus:border-primary transition-all italic text-sm"
-                    value={customerInfo.name}
-                    onChange={(e) => setCustomerInfo({...customerInfo, name: e.target.value})}
-                  />
+              <div className="bg-surface-container rounded-2xl p-6 border border-primary/5 space-y-4">
+                <div className="flex justify-between items-center">
+                  <span className="text-[10px] font-black uppercase tracking-widest text-primary/40">Full Name</span>
+                  <span className="text-lg font-headline italic text-primary">{user?.name}</span>
                 </div>
-                <div className="space-y-2">
-                  <label className="text-[10px] font-black uppercase tracking-widest text-primary/40 ml-2">Phone Number</label>
-                  <input 
-                    type="tel" 
-                    placeholder="e.g. 9876543210"
-                    className="w-full bg-surface-container border border-primary/5 rounded-xl px-6 py-4 focus:outline-none focus:border-primary transition-all italic text-sm"
-                    value={customerInfo.phone}
-                    onChange={(e) => setCustomerInfo({...customerInfo, phone: e.target.value})}
-                  />
+                <div className="flex justify-between items-center">
+                  <span className="text-[10px] font-black uppercase tracking-widest text-primary/40">Phone Number</span>
+                  <span className="text-lg font-headline italic text-primary">{user?.phone}</span>
                 </div>
+                <p className="text-[9px] text-primary/30 italic text-right">* Verified via Firebase Protocol</p>
               </div>
             </div>
 

@@ -204,7 +204,7 @@ export default function ReceiptPage() {
               </div>
               <div className="space-y-1 text-right">
                 <p className="small-caps text-primary/40 text-[9px] font-bold">Phone</p>
-                <p className="font-bold text-primary">{order.phone}</p>
+                <p className="font-bold text-primary">{order.phoneNumber}</p>
               </div>
               <div className="space-y-1">
                 <p className="small-caps text-primary/40 text-[9px] font-bold">Order Type</p>

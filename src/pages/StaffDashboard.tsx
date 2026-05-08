@@ -61,7 +61,7 @@ export default function StaffDashboard() {
 
   // Real-time Inventory
   useEffect(() => {
-    const unsubscribe = onSnapshot(collection(db, 'products'), (snapshot) => {
+    const unsubscribe = onSnapshot(collection(db, 'menu'), (snapshot) => {
       if (snapshot.empty) {
         setProducts(STATIC_PRODUCTS);
       } else {
@@ -98,6 +98,7 @@ export default function StaffDashboard() {
     try {
       await updateDoc(doc(db, 'orders', orderId), {
         status: nextStatus,
+        orderStatus: nextStatus, // Sync both status fields as requested in schema
         paymentStatus: 'paid' // Auto-mark as paid on completion
       });
       
@@ -113,7 +114,7 @@ export default function StaffDashboard() {
 
   const toggleStock = async (product: Product) => {
     try {
-      const productRef = doc(db, 'products', product.id);
+      const productRef = doc(db, 'menu', product.id);
       await setDoc(productRef, {
         ...product,
         isOutOfStock: !product.isOutOfStock
