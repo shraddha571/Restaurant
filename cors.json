@@ -1,0 +1,8 @@
+[
+  {
+    "origin": ["http://localhost:3000", "http://127.0.0.1:3000", "https://restaurant-automation-7eea7.web.app", "https://restaurant-automation-7eea7.firebaseapp.com"],
+    "method": ["GET", "POST", "PUT", "DELETE", "HEAD"],
+    "responseHeader": ["Content-Type", "Access-Control-Allow-Origin", "Authorization", "Content-Length", "User-Agent", "x-goog-resumable"],
+    "maxAgeSeconds": 3600
+  }
+]
