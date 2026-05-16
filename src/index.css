@@ -1,0 +1,173 @@
+@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Noto+Serif:ital,wght@0,400;0,700;1,400;1,700&family=Manrope:wght@200;300;400;500;600;700;800&display=swap');
+
+@theme {
+  --color-primary: #570000; /* Royal Red (Dark Maroon) */
+  --color-secondary: #D4AF37; /* Heritage Gold */
+  --color-secondary-container: #F9F1D8;
+  --color-on-secondary-container: #570000;
+  --color-secondary-fixed: #D4AF37;
+  --color-surface: #f5f2ed; /* Luxury Warm Off-White */
+  --color-surface-container: #edeae4;
+  --color-surface-container-low: #f8f6f1;
+  --color-surface-container-high: #e8e4db;
+  --color-on-surface: #1a1a1a;
+  --color-on-surface-variant: #6d5b4b;
+  
+  --font-headline: "Cormorant Garamond", "Noto Serif", serif;
+  --font-body: "Manrope", sans-serif;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-surface text-on-surface font-body leading-relaxed antialiased;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-headline;
+  }
+}
+
+@layer utilities {
+  @keyframes flow-pattern {
+    0% { background-position: 0 0, 30px 30px; }
+    100% { background-position: 60px 60px, 90px 90px; }
+  }
+
+  .jaali-bg {
+    background-image: radial-gradient(circle at 100% 50%, transparent 20%, rgba(212,175,55,0.06) 21%, rgba(212,175,55,0.06) 34%, transparent 35%, transparent),
+                      radial-gradient(circle at 0% 50%, transparent 20%, rgba(212,175,55,0.06) 21%, rgba(212,175,55,0.06) 34%, transparent 35%, transparent);
+    background-size: 60px 60px;
+    background-position: 0 0, 30px 30px;
+  }
+
+  .jaali-bg-animated {
+    animation: flow-pattern 40s linear infinite;
+  }
+
+  @keyframes mandala-spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  .mandala-bg {
+    background-image: url("data:image/svg+xml,%3Csvg width='120' height='120' viewBox='0 0 120 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%23D4AF37' stroke-width='1' stroke-opacity='0.15'%3E%3Ccircle cx='60' cy='60' r='50'/%3E%3Ccircle cx='60' cy='60' r='35'/%3E%3Ccircle cx='60' cy='60' r='20'/%3E%3Cpath d='M60 10 L60 110 M10 60 L110 60 M24.6 24.6 L95.4 95.4 M24.6 95.4 L95.4 24.6'/%3E%3C/g%3E%3C/svg%3E");
+    background-size: 120px 120px;
+    background-repeat: repeat;
+  }
+
+  .ornament-bg {
+    background-image: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M50 0c27.614 0 50 22.386 50 50S77.614 100 50 100 0 77.614 0 50 22.386 0 50 0zm0 10c-22.091 0-40 17.909-40 40s17.909 40 40 40 40-17.909 40-40-17.909-40-40-40z' fill='%23D4AF37' fill-opacity='0.08'/%3E%3C/svg%3E");
+    background-size: 160px 160px;
+    background-repeat: repeat;
+  }
+
+  @keyframes gold-shimmer-pan {
+    0% { transform: translateX(-150%); }
+    100% { transform: translateX(150%); }
+  }
+
+  .gold-shimmer {
+    position: absolute;
+    inset: -20%;
+    background: linear-gradient(115deg, transparent 20%, rgba(212, 175, 55, 0.15) 45%, rgba(212, 175, 55, 0.4) 50%, rgba(212, 175, 55, 0.15) 55%, transparent 80%);
+    mix-blend-mode: color-dodge;
+    pointer-events: none;
+    animation: gold-shimmer-pan 8s ease-in-out infinite;
+    z-index: 10;
+  }
+
+  @keyframes float-motif {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-12px) rotate(3deg); }
+  }
+
+  .animate-floating-motif {
+    animation: float-motif 12s ease-in-out infinite;
+  }
+
+  @keyframes float-motif-reverse {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(12px) rotate(-3deg); }
+  }
+
+  .animate-floating-motif-reverse {
+    animation: float-motif-reverse 15s ease-in-out infinite;
+  }
+
+  @keyframes calligraphy-draw {
+    0% { stroke-dashoffset: 100; opacity: 0; }
+    10% { opacity: 1; }
+    100% { stroke-dashoffset: 0; opacity: 1; }
+  }
+
+  .calligraphy-stroke-anim > path {
+    stroke-dasharray: 100;
+    stroke-dashoffset: 100;
+    animation: calligraphy-draw 3.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  }
+
+  .cinematic-glow {
+    background: radial-gradient(circle at 50% 50%, rgba(212, 175, 55, 0.15) 0%, transparent 60%);
+    mix-blend-mode: screen;
+  }
+
+  @keyframes float-particle {
+    0% { transform: translateY(0) scale(1) opacity(0); }
+    50% { opacity: 0.8; }
+    100% { transform: translateY(-100px) scale(0.5) opacity(0); }
+  }
+
+  .animate-float-particle {
+    animation: float-particle 10s infinite linear;
+  }
+
+  .vertical-text {
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+  }
+
+  .luxury-border {
+    @apply border border-on-surface/10;
+  }
+
+  .luxury-border-gold {
+    @apply border border-secondary/20;
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .oval-mask {
+    mask-image: radial-gradient(ellipse at center, black 100%, transparent 100%);
+    @apply rounded-[50%];
+  }
+
+  .text-display {
+    @apply font-headline text-[clamp(3.5rem,10vw,7rem)] leading-[0.85] tracking-tighter font-light;
+  }
+
+  .small-caps {
+    @apply text-[11px] font-bold uppercase tracking-[0.4em] text-on-surface-variant;
+  }
+
+  .glass-surface {
+    @apply bg-white/30 backdrop-blur-2xl border border-white/20 shadow-xl;
+  }
+
+  .gold-glow {
+    box-shadow: 0 10px 40px rgba(212, 175, 55, 0.15);
+  }
+
+  .hover-gold-glow:hover {
+    box-shadow: 0 20px 60px rgba(212, 175, 55, 0.25);
+  }
+}
